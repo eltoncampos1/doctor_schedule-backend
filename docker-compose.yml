@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  app:
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: /bin/sh docker_dev_start.sh
+    ports:
+      - 4000:4000
+    depends_on:
+      - db_dev
+    links:
+      - db_dev
+  db_dev:
+    restart: always
+    image: postgres
+    container_name: doctor_schedule_dev
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=doctor_schedule_dev
+    volumes:
+      - pg:/data/postgres
+
+volumes:
+  pg:
+    driver: local
