@@ -1,6 +1,18 @@
 version: '3'
 
 services:
+  app:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: /bin/sh docker_dev_start.sh
+    ports:
+      - 4000:4000
+    depends_on:
+      - db_dev
+    links:
+      - db_dev
   db_dev:
     restart: always
     image: postgres

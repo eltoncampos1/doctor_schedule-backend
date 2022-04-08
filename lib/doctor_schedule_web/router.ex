@@ -8,7 +8,7 @@ defmodule DoctorScheduleWeb.Router do
   scope "/api", DoctorScheduleWeb do
     pipe_through :api
 
-    get "/hello", HelloController, :call
+    resources "/users", UserController
   end
 
   # Enables LiveDashboard only for development
