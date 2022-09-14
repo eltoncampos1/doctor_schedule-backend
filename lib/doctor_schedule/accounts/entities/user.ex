@@ -29,5 +29,14 @@ defmodule DoctorSchedule.Accounts.Entities.User do
     |> validate_length(:password, min: 6, max: 100)
     |> unique_constraint(:email)
     |> validate_confirmation(:password)
+    |> hash_password()
+  end
+
+  defp hash_password(%Ecto.Changeset{valid?: true, changes: %{password: pwd}} = changeset) do
+    change(changeset, Argon2.add_hash(pwd))
+  end
+
+  defp hash_password(changeset) do
+    changeset
   end
 end
