@@ -6,18 +6,19 @@ defmodule DoctorScheduleWeb.UserControllerTest do
   alias DoctorSchedule.Accounts.Entities.User
 
   @create_attrs %{
-    email: "some email",
-    first_name: "some first_name",
-    last_name: "some last_name",
-    password_hash: "some password_hash",
-    role: "some role"
+    email: "some@email",
+    first_name: "first_name",
+    last_name: "last_name",
+    password: "some password_hash",
+    password_confirmation: "some password_hash"
   }
   @update_attrs %{
-    email: "some updated email",
+    email: "some_updated@email",
     first_name: "some updated first_name",
     last_name: "some updated last_name",
     password_hash: "some updated password_hash",
-    role: "some updated role"
+    password: "some password_hash",
+    password_confirmation: "some password_hash"
   }
   @invalid_attrs %{email: nil, first_name: nil, last_name: nil, password_hash: nil, role: nil}
 
@@ -40,12 +41,9 @@ defmodule DoctorScheduleWeb.UserControllerTest do
       conn = get(conn, Routes.user_path(conn, :show, id))
 
       assert %{
-               "id" => ^id,
-               "email" => "some email",
-               "first_name" => "some first_name",
-               "last_name" => "some last_name",
-               "password_hash" => "some password_hash",
-               "role" => "some role"
+               "email" => "some@email",
+               "first_name" => "first_name",
+               "last_name" => "last_name"
              } = json_response(conn, 200)["data"]
     end
 
@@ -66,11 +64,9 @@ defmodule DoctorScheduleWeb.UserControllerTest do
 
       assert %{
                "id" => ^id,
-               "email" => "some updated email",
+               "email" => "some_updated@email",
                "first_name" => "some updated first_name",
-               "last_name" => "some updated last_name",
-               "password_hash" => "some updated password_hash",
-               "role" => "some updated role"
+               "last_name" => "some updated last_name"
              } = json_response(conn, 200)["data"]
     end
 
