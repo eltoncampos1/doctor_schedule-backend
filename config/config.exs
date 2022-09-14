@@ -17,6 +17,10 @@ config :doctor_schedule, DoctorScheduleWeb.Endpoint,
   pubsub_server: DoctorSchedule.PubSub,
   live_view: [signing_salt: "tzHQKhg7"]
 
+config :doctor_schedule, DoctorScheduleWeb.Auth.Guardian,
+  issuer: "doctor_schedule",
+  secret_key: System.get_env("GUARDIAN_SECRET")
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails
