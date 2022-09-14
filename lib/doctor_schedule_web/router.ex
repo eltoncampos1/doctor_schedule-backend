@@ -8,6 +8,7 @@ defmodule DoctorScheduleWeb.Router do
   scope "/api", DoctorScheduleWeb.Api, as: :api do
     pipe_through :api
 
+    resources "/sessions", SessionController
     resources "/users", UserController
   end
 
@@ -30,7 +31,7 @@ defmodule DoctorScheduleWeb.Router do
 
   # Enables the Swoosh mailbox preview in development.
   #
-  # Note that preview only shows emails that were sent by the same
+  # Note that preview o nly shows emails that were sent by the same
   # node running the Phoenix server.
   if Mix.env() == :dev do
     scope "/dev" do

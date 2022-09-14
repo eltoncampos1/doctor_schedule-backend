@@ -5,7 +5,7 @@ defmodule DoctorSchedule.MixProject do
     [
       app: :doctor_schedule,
       version: "0.1.0",
-      elixir: "~> 1.12",
+      elixir: "~> 1.13.3",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -56,7 +56,8 @@ defmodule DoctorSchedule.MixProject do
       {:excoveralls, "~> 0.10", only: :test},
       {:sobelow, "~> 0.8", only: :dev},
       {:dialyxir, "~> 0.5.0", only: [:dev, :test], runtime: false},
-      {:argon2_elixir, "~> 3.0"}
+      {:argon2_elixir, "~> 3.0"},
+      {:guardian, "~> 2.0"}
     ]
   end
 
