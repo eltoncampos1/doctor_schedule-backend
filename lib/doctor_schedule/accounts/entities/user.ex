@@ -2,12 +2,19 @@ defmodule DoctorSchedule.Accounts.Entities.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @primary_key {:id, :binary_id, autogenerate: true}
+
+  @required [:email, :first_name, :last_name, :password, :password_confirmation]
+
+  @derive {Phoenix.Param, key: :id}
   schema "users" do
-    field :email, :string
+    field :email, :string, unique: true
     field :first_name, :string
     field :last_name, :string
     field :password_hash, :string
-    field :role, :string
+    field :password, :string, virtual: true
+    field :password_confirmation, :string, virtual: true
+    field :role, :string, default: "user"
 
     timestamps()
   end
@@ -15,7 +22,12 @@ defmodule DoctorSchedule.Accounts.Entities.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :first_name, :last_name, :role, :password_hash])
-    |> validate_required([:email, :first_name, :last_name, :role, :password_hash])
+    |> cast(attrs, @required)
+    |> validate_required(@required)
+    |> validate_format(:email, ~r/@/)
+    |> update_change(:email, &String.downcase/1)
+    |> validate_length(:password, min: 6, max: 100)
+    |> unique_constraint(:email)
+    |> validate_confirmation(:password)
   end
 end

@@ -1,4 +1,4 @@
-defmodule DoctorSchedule.Accounts.Repositories.AccountsTest do
+defmodule DoctorSchedule.Accounts.Repositories.AccountsRepositoryTest do
   use DoctorSchedule.DataCase
 
   import DoctorSchedule.AccountsFixtures
