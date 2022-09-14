@@ -5,7 +5,7 @@ defmodule DoctorScheduleWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", DoctorScheduleWeb do
+  scope "/api", DoctorScheduleWeb.Api, as: :api do
     pipe_through :api
 
     resources "/users", UserController
