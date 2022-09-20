@@ -4,16 +4,40 @@ defmodule DoctorScheduleWeb.Api.UserControllerTest do
   import DoctorSchedule.AccountsFixtures
 
   alias DoctorSchedule.Accounts.Entities.User
+  alias DoctorSchedule.Accounts.Repositories.AccountRepository
+
   alias DoctorSchedule.UserFixture
 
+  import DoctorScheduleWeb.Auth.Guardian
+
+  @valid_user %{
+    email: "auth@email.com",
+    first_name: "first_name",
+    last_name: "some_last_name",
+    password: "some_password_hash",
+    password_confirmation: "some_password_hash"
+  }
+
   setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+    {:ok, user} = AccountRepository.create_user(@valid_user)
+
+    {:ok, token, _claims} = encode_and_sign(user, %{}, token_type: :access)
+
+    conn =
+      conn
+      |> put_req_header("accept", "application/json")
+      |> put_req_header("authorization", "bearer " <> token)
+
+    {:ok, conn: conn}
   end
 
   describe "index" do
     test "lists all users", %{conn: conn} do
-      conn = get(conn, Routes.api_user_path(conn, :index))
-      assert json_response(conn, 200) == []
+      conn =
+        conn
+        |> get(Routes.api_user_path(conn, :index))
+
+      assert json_response(conn, 200) |> Enum.count() == 1
     end
   end
 
