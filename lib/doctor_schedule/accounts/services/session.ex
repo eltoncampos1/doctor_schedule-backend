@@ -13,7 +13,7 @@ defmodule DoctorSchedule.Accounts.Services.Session do
     if Argon2.verify_pass(password, user.password_hash) do
       {:ok, user}
     else
-      {:error, :unauthoorized}
+      {:error, :unauthorized}
     end
   end
 end
