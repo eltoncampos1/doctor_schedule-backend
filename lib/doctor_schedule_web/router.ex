@@ -13,6 +13,8 @@ defmodule DoctorScheduleWeb.Router do
     pipe_through :api
 
     resources "/sessions", SessionController
+    post "/password/forgot", PasswordForgotController, :create
+
     resources "/users", UserController, only: [:create]
   end
 
